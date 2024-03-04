@@ -4,7 +4,7 @@
 
 using namespace std;
 
-FBalloc::FBalloc()
+frbl::frbl()
 {
 	//initialize method
 	mem_page_ptr = (uint32_t*)malloc(mem_page_size);
@@ -18,16 +18,16 @@ FBalloc::FBalloc()
 	first_block_ptr->availible_block_size = mem_page_size;
 
 }
-FBalloc::~FBalloc()
+frbl::~frbl()
 {
 	if (mem_page_ptr != nullptr) {
 		::free(mem_page_ptr);
 	}
 }
 
-void* FBalloc::fmalloc(const size_t size)
+void* frbl::fmalloc(const size_t size)
 {
-	cout << first_block_ptr->availible_block_size << endl;
+	// cout << first_block_ptr->availible_block_size << endl;
 	if (size == 0) {
 		return nullptr;
 	}
@@ -69,7 +69,7 @@ void* FBalloc::fmalloc(const size_t size)
 }
 
 
-void FBalloc::ffree(const void* ptr, const size_t size)
+void frbl::ffree(const void* ptr, const size_t size)
 {
 	if (ptr == nullptr) {
 		return;
@@ -101,24 +101,3 @@ void FBalloc::ffree(const void* ptr, const size_t size)
 
 }
 
-void FBalloc::fbdefragment()
-{
-	Block* block_ptr = first_block_ptr;
-	while(block_ptr != nullptr) {
-
-		while (block_ptr != nullptr) {
-			uint8_t* end_ptr_of_block = (uint8_t*)block_ptr + block_ptr->availible_block_size;
-
-			if (end_ptr_of_block != (uint8_t*)block_ptr->next_block_ptr) {
-				break;
-			}
-
-			block_ptr->availible_block_size += block_ptr->next_block_ptr->availible_block_size;
-			block_ptr->next_block_ptr = block_ptr->next_block_ptr->next_block_ptr;
-
-		}
-
-
-		block_ptr = block_ptr->next_block_ptr;
-	}
-}

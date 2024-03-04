@@ -5,7 +5,7 @@
 
 using namespace std;
 
-class FBalloc
+class frbl
 {
 private:
 	struct Block
@@ -19,10 +19,10 @@ private:
 	Block* first_block_ptr;
 
 public:
-	FBalloc();
-	virtual ~FBalloc();
+	frbl();
+	virtual ~frbl();
 	void* fmalloc(const size_t size);
 	void ffree(const void* ptr, const size_t size);
-	void fbdefragment();
+
 
 };
